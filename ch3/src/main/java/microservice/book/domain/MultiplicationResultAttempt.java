@@ -15,10 +15,14 @@ public final class MultiplicationResultAttempt {
     private final Multiplication multiplication;
     private final int resultAttempt;
 
+    private final boolean correct;
+
+    // JSON (역) 직렬화를 위해
     MultiplicationResultAttempt() {
         user = null;
         multiplication = null;
         resultAttempt = -1;
+        correct = false;
     }
 
 
