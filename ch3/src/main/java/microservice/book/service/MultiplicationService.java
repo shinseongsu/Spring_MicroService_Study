@@ -3,6 +3,8 @@ package microservice.book.service;
 import microservice.book.domain.Multiplication;
 import microservice.book.domain.MultiplicationResultAttempt;
 
+import java.util.List;
+
 public interface MultiplicationService {
 
     /*
@@ -19,5 +21,7 @@ public interface MultiplicationService {
      *
      */
     boolean checkAttempt(final MultiplicationResultAttempt resultAttempt);
+
+    List<MultiplicationResultAttempt> getStatsForUser(final String userAlias);
 
 }

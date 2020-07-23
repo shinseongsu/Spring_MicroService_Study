@@ -2,6 +2,7 @@ package microservice.book.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import microservice.book.domain.Multiplication;
+import microservice.book.domain.MultiplicationResultAttempt;
 import microservice.book.service.MultiplicationService;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
