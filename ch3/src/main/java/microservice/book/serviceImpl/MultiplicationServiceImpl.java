@@ -1,7 +1,9 @@
 package microservice.book.serviceImpl;
 
+import microservice.book.dispatcher.EventDispatcher;
 import microservice.book.domain.Multiplication;
 import microservice.book.domain.MultiplicationResultAttempt;
+import microservice.book.domain.MultiplicationSolvedEvent;
 import microservice.book.domain.User;
 import microservice.book.repository.MultiplicationResultAttemptRepository;
 import microservice.book.repository.UserRepository;
@@ -21,15 +23,18 @@ public class MultiplicationServiceImpl implements MultiplicationService {
     private RandomGeneratorService randomGeneratorService;
     private MultiplicationResultAttemptRepository attemptRepository;
     private UserRepository userRepository;
+    private EventDispatcher eventDispatcher;
 
     @Autowired
     public MultiplicationServiceImpl(final RandomGeneratorService randomGeneratorService,
                        final MultiplicationResultAttemptRepository attemptRepository,
-                       final UserRepository userRepository) {
+                       final UserRepository userRepository,
+                       final EventDispatcher eventDispatcher) {
 
         this.randomGeneratorService = randomGeneratorService;
         this.attemptRepository = attemptRepository;
         this.userRepository = userRepository;
+        this.eventDispatcher = eventDispatcher;
     }
 
     @Override
@@ -52,10 +57,21 @@ public class MultiplicationServiceImpl implements MultiplicationService {
                     attempt.getMultiplication().getFactorB();
 
 
-        MultiplicationResultAttempt checkedAttempt = new MultiplicationResultAttempt(attempt.getUser(),
-                attempt.getMultiplication(), attempt.getResultAttempt(), iscorrect );
+        MultiplicationResultAttempt checkedAttempt =
+                new MultiplicationResultAttempt(
+                        user.orElse(attempt.getUser()),
+                        attempt.getMultiplication(),
+                        attempt.getResultAttempt(),
+                        iscorrect );
 
         attemptRepository.save(checkedAttempt);
+
+        // 이벤트로 결과를 전송
+        eventDispatcher.send(new MultiplicationSolvedEvent(
+                checkedAttempt.getId(),
+                checkedAttempt.getUser().getId(),
+                checkedAttempt.isCorrect())
+        );
 
         return iscorrect;
     }
@@ -64,5 +80,6 @@ public class MultiplicationServiceImpl implements MultiplicationService {
     public List<MultiplicationResultAttempt> getStatsForUser(String userAlias) {
         return attemptRepository.findTop5ByUserAliasOrderByIdDesc(userAlias);
     }
+
 
 }
