@@ -26,6 +26,7 @@ public final class BadgeCard {
     private final long badgeTimestamp;
     private final Badge badge;
 
+    // JSON/JPA 를 위한 빈 생성자
     public BadgeCard() {
         this(null, null, 0, null);
     }

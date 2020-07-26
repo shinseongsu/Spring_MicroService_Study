@@ -17,6 +17,7 @@ import javax.persistence.Id;
 @Entity
 public final class ScoreCard {
 
+    // 명시되지 않은 경우 이 카드에 할당되는 기본 점수
     public static final int DEFAULT_SCORE = 10;
 
     @Id
@@ -36,6 +37,7 @@ public final class ScoreCard {
     @Column(name = "SCORE")
     private final int score;
 
+    // JSON/JPA 를 위한 빈 생성자
     public ScoreCard() {
         this(null, null, null, 0, 0);
     }
