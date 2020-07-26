@@ -7,7 +7,7 @@ public enum Badge {
     GOLD_MULTIPLICATOR,
 
     FIRST_ATTEMPT,
-    FRIST_MON,
+    FIRST_MON,
     LUCKY_NUMBER
 
 }
