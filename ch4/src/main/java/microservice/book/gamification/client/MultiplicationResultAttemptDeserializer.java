@@ -17,6 +17,7 @@ public class MultiplicationResultAttemptDeserializer extends JsonDeserializer<Mu
     public MultiplicationResultAttempt deserialize(JsonParser jsonParser,
                                                    DeserializationContext deserializationContext)
             throws IOException, JsonProcessingException {
+
         ObjectCodec oc = jsonParser.getCodec();
         JsonNode node = oc.readTree(jsonParser);
         return new MultiplicationResultAttempt(node.get("user").get("alias").asText(),

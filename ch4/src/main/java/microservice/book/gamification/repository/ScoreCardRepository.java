@@ -16,17 +16,23 @@ public interface ScoreCardRepository extends CrudRepository<ScoreCard, Long> {
      * @param userId 총 점수를 조회하고자 하는 사용자의 ID
      * @return 주어진 사용자의 총 점수
      */
-    @Query(value = "SELECT SUM(s.score) FROM microservices.book.gamification.domain.ScoreCard s WHERE s.userId = :userId GROUP BY s.userId", nativeQuery = true)
-    int getTotalScoreForUser(@Param("userId") final Long userId);
+    @Query(value = "SELECT SUM(s.score) FROM SCORE_CARD s WHERE s.user_id = :userId GROUP BY s.user_id", nativeQuery = true)
+    int getTotalScoreForUser(@Param("userId") final int userId);
 
     /**
      * 사용자와 사용자의 총 점수를 나타내는 {@link LeaderBoardRow} 리스트를 조회
      *
      * @return 높은 점수 순으로 정렬된 리더 보드
      */
-    @Query(value = "SELECT NEW microservices.book.gamification.domain.LeaderBoardRow(s.userId, SUM(s.score)) " +
-            "FROM microservices.book.gamification.domain.ScoreCard s " +
-            "GROUP BY s.userId ORDER BY SUM(s.score) DESC", nativeQuery = true)
+    /*@Query(value = "SELECT NEW microservices.book.gamification.domain.LeaderBoard(s.userId, SUM(s.score))"
+            + "FROM microservices.book.gamification.domain.ScoreCard s "
+            + "GROUP BY s.userId ORDER BY SUM(s.score) DESC", nativeQuery = true)*/
+    @Query(value = " SELECT s.USER_ID, SUM(s.score) " +
+            "      FROM SCORE_CARD s  " +
+            "         , LEADER_BOARD_ROW  l " +
+            "     where s.user_id = l.user_id " +
+            "     GROUP BY s.user_id " +
+            "     ORDER BY SUM(s.score) DESC ;", nativeQuery = true)
     List<LeaderBoardRow> findFirst10();
 
     /**
