@@ -17,7 +17,7 @@ public interface ScoreCardRepository extends CrudRepository<ScoreCard, Long> {
      * @return 주어진 사용자의 총 점수
      */
     @Query(value = "SELECT SUM(s.score) FROM SCORE_CARD s WHERE s.user_id = :userId GROUP BY s.user_id", nativeQuery = true)
-    int getTotalScoreForUser(@Param("userId") final int userId);
+    int getTotalScoreForUser(@Param("userId") final Long userId);
 
     /**
      * 사용자와 사용자의 총 점수를 나타내는 {@link LeaderBoardRow} 리스트를 조회

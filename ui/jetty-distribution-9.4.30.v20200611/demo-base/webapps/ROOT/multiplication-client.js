@@ -1,6 +1,8 @@
+var SERVER_URL = "http://localhost:8000/api";
+
 function updateMultiplication() {
     $.ajax({
-      url: "http://localhost:8080/multiplication/random"
+      url: SERVER_URL + "/random"
     }).then(function (data) {
       // 폼 비우기
       console.log(data);
@@ -16,7 +18,7 @@ function updateMultiplication() {
     var userId = -1;
     $.ajax({
       async: false,
-      url: "http://localhost:8080/results?alias=" + alias,
+      url: SERVER_URL + "/results?alias=" + alias,
       success: function (data) {
         $('#results-div').show();
         $('#results-body').empty();
@@ -26,7 +28,7 @@ function updateMultiplication() {
             '<td>' + row.resultAttempt + '</td>' +
             '<td>' + (row.correct === true ? 'YES' : 'NO') + '</td></tr>');
         });
-        userId = data[0].user.id;
+        userId = data[0].user_id.id;
       }
     });
     return userId;
@@ -53,7 +55,7 @@ function updateMultiplication() {
   
       // POST 로 데이터 보내기
       $.ajax({
-        url: 'http://localhost:8080/results',
+        url:  SERVER_URL + '/results',
         type: 'POST',
         data: JSON.stringify(data),
         contentType: "application/json; charset=utf-8",
@@ -72,11 +74,11 @@ function updateMultiplication() {
   
       updateMultiplication();
   
-      setTimeout(function () {
-        var userId = updateResults(userAlias);
-        updateStats(userId);
-        updateLeaderBoard();
-      }, 300);
+//      setTimeout(function () {
+//        var userId = updateResults(userAlias);
+//        updateStats(userId);
+//        updateLeaderBoard();
+//      }, 300);
     });
   });
   
