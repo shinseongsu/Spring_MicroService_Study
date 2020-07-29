@@ -2,8 +2,10 @@ var SERVER_URL = "http://localhost:8000/api";
 
 function updateLeaderBoard() {
     $.ajax({
-      url: SERVER_URL + "leaders"
+      url: SERVER_URL + "/leaders",
+      dataType:"json"
     }).then(function (data) {
+      console.log(data);
       $('#leaderboard-body').empty();
       data.forEach(function (row) {
         $('#leaderboard-body').append('<tr><td>' + row.userId + '</td>' +
@@ -15,6 +17,7 @@ function updateLeaderBoard() {
   function updateStats(userId) {
     $.ajax({
       url: SERVER_URL + "/stats?userId=" + userId,
+      dataType:"json",
       success: function (data) {
         $('#stats-div').show();
         $('#stats-user-id').empty().append(userId);

@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVeersion = '2.1.7.RELEASE'
+        springBootVeersion = '2.1.5.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -9,6 +9,8 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVeersion}")
     }
 }
+
+
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -35,13 +37,21 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
     compile('com.h2database:h2')
-    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:2.2.3.RELEASE')
-    compile('org.springframework.boot:spring-boot-starter-parent:1.5.18.RELEASE')
-    compile('org.springframework.cloud:spring-cloud-dependencies:Edgware.SR5')
-    compile('org.springframework.boot:spring-boot-starter-actuator')
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: '2.1.5.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-config-server
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-config-server', version: '2.1.5.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-server
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-server', version: '2.1.5.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-context
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-context', version: '2.1.5.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-config
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-config', version: '2.1.5.RELEASE'
+
 
     testCompile "org.projectlombok:lombok"
     annotationProcessor('org.projectlombok:lombok')
     testAnnotationProcessor('org.projectlombok:lombok')
 
 }
+

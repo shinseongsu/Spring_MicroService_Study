@@ -2,10 +2,12 @@ var SERVER_URL = "http://localhost:8000/api";
 
 function updateMultiplication() {
     $.ajax({
-      url: SERVER_URL + "/random"
+      url: SERVER_URL + "/multiplication/random",
+      dataType:"json"
     }).then(function (data) {
       // 폼 비우기
       console.log(data);
+
       $("#attempt-form").find("input[name='result-attempt']").val("");
       $("#attempt-form").find("input[name='user-alias']").val("");
       // 무작위 문제를 API로 가져와서 추가하기
@@ -19,6 +21,7 @@ function updateMultiplication() {
     $.ajax({
       async: false,
       url: SERVER_URL + "/results?alias=" + alias,
+      dataType:"json",
       success: function (data) {
         $('#results-div').show();
         $('#results-body').empty();
